@@ -24,4 +24,8 @@ http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/jav
 		</java:invoke>
 		<logger level="INFO" doc:name="Logger" doc:id="17e2b380-f009-4227-b11d-2db1a1902bac" message="#[payload]"/>
 	</flow>
+	<flow name="java-module-testFlow2" doc:id="c3c4d4af-052f-4d39-bac1-90a91fcaa48e" >
+		<http:listener doc:name="Listener" doc:id="fbed6858-746c-4416-82bf-8a4f14265c86" config-ref="HTTP_Listener_config" path="/test2"/>
+		<logger level="INFO" doc:name="Logger" doc:id="b198fa4e-5559-4bc9-bdc1-d3df5bb01a23" message="a logger added"/>
+	</flow>
 </mule>
