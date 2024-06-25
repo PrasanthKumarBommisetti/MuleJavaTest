@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:java="http://www.mulesoft.org/schema/mule/java" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/java/current/mule-java.xsd">
+	<flow name="java-module-testFlow" doc:id="b51f88d9-8eba-4649-a141-fb5461761a9e" >
+		<http:listener doc:name="Listener" doc:id="cc946355-4ff1-4503-bb11-d6897d9d5136" config-ref="HTTP_Listener_config" path="/testing"/>
+		<java:invoke-static method="generateDiamond(int)" doc:name="Invoke static" doc:id="8e659278-56c1-4db9-96c8-76ee5dee6875" class="prasanth.test.TestClass">
+			<java:args ><![CDATA[#[{
+	"rows":attributes.queryParams.rowSize
+}]]]></java:args>
+		</java:invoke-static>
+		<logger level="INFO" doc:name="Logger" doc:id="8137d625-407b-40fa-b9bb-079ef5a6ae26" message="#[payload]"/>
+	</flow>
+	<flow name="java-module-testFlow1" doc:id="1f647d91-75fc-4b3b-b755-46a4762b5eb5" >
+		<http:listener doc:name="Listener" doc:id="14343bcc-d48d-44ea-96af-9d5a76102839" config-ref="HTTP_Listener_config" path="/nonstatic"/>
+		<java:new constructor="TestClass()" doc:name="New" doc:id="9a593a46-865c-4f4a-a605-bca34dec4266" class="prasanth.test.TestClass"/>
+		<java:invoke method="generateDiamondNonStatic(int)" doc:name="Invoke" doc:id="ff58c7e1-de67-4035-8b31-0acffc234c2b" instance="#[payload]" class="prasanth.test.TestClass">
+			<java:args ><![CDATA[#[{
+	rows:5
+}]]]></java:args>
+		</java:invoke>
+		<logger level="INFO" doc:name="Logger" doc:id="17e2b380-f009-4227-b11d-2db1a1902bac" message="#[payload]"/>
+	</flow>
+</mule>
